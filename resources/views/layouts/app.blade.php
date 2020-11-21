@@ -141,9 +141,8 @@
                                     @foreach ($top_views as $item)
                                     <li>
                                         <div class="media">
-                                            <a href="post-style-1.html">
-                                                <img src="{{url('clients')}}/{{$item->image}}" alt="post"
-                                                    class="img-fluid">
+                                            <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">
+                                                <img src="{{url('/')}}{{$item->image}}" alt="post" class="img-fluid">
                                             </a>
                                             <div class="media-body">
                                                 <h3 class="title-medium-light size-md mb-10">
@@ -172,7 +171,7 @@
                                 <ul class="popular-categories">
                                     @foreach ($categories as $item)
                                     <li>
-                                        <a href="{{$item->category}}">{{$item->category}}
+                                        <a href="{{url('/category')}}/{{$item->id}}/{{$item->slug}}">{{$item->category}}
                                             <span>({{count($item->newCount)}})</span>
                                         </a>
                                     </li>
@@ -188,8 +187,7 @@
                                     <li>
                                         <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">
                                             <figure>
-                                                <img src="{{url('clients')}}/{{$item->image}}" alt="post"
-                                                    class="img-fluid">
+                                                <img src="{{url('/')}}{{$item->image}}" alt="post" class="img-fluid">
                                             </figure>
                                         </a>
                                     </li>
@@ -286,20 +284,17 @@
                                 <i class="fa fa-home" aria-hidden="true"></i>Trang chủ</a>
                         </div>
                     </li>
-
                     @if (Auth::user())
                     <li>
-                        <a href="{{url('/auth-posts')}}/{{Auth::user()->username}}">
+                        <a href="{{url('/auth-posts')}}/{{Auth::user()->id}}/{{Auth::user()->username}}">
                             <i class="fa fa-user" aria-hidden="true"></i>Bài viết cá nhân</a>
                     </li>
                     @endif
-
                     <li class="panel panel-default">
                         <div class="panel-heading">
                             <a href="{{url('/news')}}">
                                 <i class="fa fa-file-text" aria-hidden="true"></i>Tin tức</a>
                         </div>
-
                     </li>
                     <li>
                         <a href="{{url('/contact')}}">

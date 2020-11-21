@@ -8,6 +8,7 @@ use App\Models\Comments;
 use App\Models\News;
 use App\Models\Roles;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class PostDetail extends Controller
@@ -35,6 +36,11 @@ class PostDetail extends Controller
             ->take(8)
             ->get();
         $title = $news_post_detail->title;
+
+        News::where('id', $id)->update([
+            'views_count' =>  $news_post_detail->views_count + 1,
+            'updated_at' => Carbon::now(),
+        ]);
 
         return view('client.post-detail', compact('title', 'posts', 'news_post_detail', 'related_news', 'user'));
     }

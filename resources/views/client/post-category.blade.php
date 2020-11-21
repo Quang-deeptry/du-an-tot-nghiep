@@ -72,7 +72,7 @@
                             <div class="position-relative width-40">
                                 <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}"
                                     class="img-opacity-hover img-overlay-70">
-                                    <img src="{{url('/clients')}}/{{$item->image}}" alt="news" class="img-fluid">
+                                    <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid">
                                 </a>
                                 <div class="topic-box-top-xs">
                                     <div class="topic-box-sm color-cod-gray mb-20">{{$item->category->category}}</div>
@@ -84,7 +84,7 @@
                                         <li>
                                             <span>Bởi</span>
                                             <a
-                                                href="{{url('/auth-posts')}}/{{$item->user->username}}">{{$item->user->username}}</a>
+                                                href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
                                         </li>
                                         <li>
                                             <span>

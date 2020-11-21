@@ -126,6 +126,19 @@ img {
     height: 73px !important;
     object-fit: cover !important;
 }
+.img-fluid-news {
+    width: 292px !important;
+    height: 207.516px !important;
+    object-fit: cover !important;
+}
+.img-fluid-post-detail {
+    width: 730px !important;
+    height: 426px !important;
+    object-fit: cover !important;
+}
+.contact-form {
+    display: none;
+}
 ul {
     list-style: none none;
     margin: 0;

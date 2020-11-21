@@ -68,8 +68,11 @@
                     <div class="media media-none-xs">
                         <img src="{{asset('clients/img/author.jpg')}}" alt="author" class="img-fluid rounded-circle">
                         <div class="media-body pt-10 media-margin30">
-                            <h3 class="size-lg mb-5">{{$user->username}}</h3>
-                            <div class="post-by mb-5">By {{$user->roles->name}}</div>
+                            @if ($user->id === Auth::user()->id)
+                            <a href="{{url('/user-edit')}}" class="mb-5"
+                                style="font-size: 0.75em; color: #007bff; text-decoration: none">Chỉnh sửa</a>
+                            @endif
+                            <div class="post-by mb-5">By {{$user->username}}</div>
                             <p class="mb-15">Email: {{$user->email}}</p>
                             <ul class="author-social-style1 item-inline">
                                 <li>
@@ -107,7 +110,7 @@
                         <div class="mb-30">
                             <div class="position-relative mb-20">
                                 <a class="img-opacity-hover" href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">
-                                    <img src="{{url('clients')}}/{{$item->image}}" alt="news"
+                                    <img src="{{url('/')}}{{$item->image}}" alt="news"
                                         class="img-fluid-auth-post width-100">
                                 </a>
                                 <div class="topic-box-top-xs">

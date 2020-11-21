@@ -50,7 +50,7 @@
             @foreach ($news_four_top_1 as $item)
             <div class="col-lg-6 col-md-12">
                 <div class="img-overlay-70 img-scale-animate mb-2">
-                    <img src="{{url('clients')}}/{{$item->image}}" alt="news" class="img-fluid-top-1 width-100">
+                    <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-top-1 width-100">
                     <div class="mask-content-lg">
                         <div class="topic-box-sm color-cinnabar mb-20">{{$item->category->category}}</div>
                         <h1 class="title-medium-light">
@@ -79,7 +79,7 @@
                 <div class="row tab-space1">
                     <div class="col-12">
                         <div class="img-overlay-70 img-scale-animate mb-2">
-                            <img src="{{url('clients')}}/{{$item->image}}" alt="news" class="img-fluid-top-2 width-100">
+                            <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-top-2 width-100">
                             <div class="mask-content-lg">
                                 <div class="topic-box-sm color-azure-radiance mb-20">{{$item->category->category}}</div>
                                 <h1 class="title-medium-light">
@@ -125,7 +125,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <img src="{{url('clients')}}/{{$item->image}}" alt="news" class="img-fluid-top-3 width-100">
+                            <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-top-3 width-100">
                         </div>
                     </div>
                     @endforeach
@@ -152,7 +152,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <img src="{{url('clients')}}/{{$item->image}}" alt="news" class="img-fluid-top-4 width-100">
+                            <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-top-4 width-100">
                         </div>
                     </div>
                     @endforeach
@@ -190,7 +190,7 @@
                                 <div class="img-overlay-70 img-scale-animate mb-30">
                                     <a
                                         href="{{url('posts')}}/{{$post_category_current->id}}/{{$post_category_current->slug}}">
-                                        <img src="{{url('clients')}}/{{$post_category_current->image}}" alt="news"
+                                        <img src="{{url('/')}}{{$post_category_current->image}}" alt="news"
                                             class="img-fluid width-100">
                                     </a>
                                     <div class="mask-content-lg">
@@ -222,7 +222,7 @@
                                 <div class="media mb-30">
                                     <a class="width38-lg width40-md img-opacity-hover"
                                         href="{{url('posts')}}/{{$item->id}}/{{$item->slug}}">
-                                        <img src="{{url('clients')}}/{{$item->image}}" alt="news" class="img-fluid">
+                                        <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid">
                                     </a>
                                     <div class="media-body">
                                         <div class="post-date-dark">
@@ -248,7 +248,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="img-overlay-70 img-scale-animate mb-30">
                                     <a href="{{url('posts')}}/{{$cate->news->id}}/{{$cate->news->slug}}">
-                                        <img src="{{url('clients')}}/{{$cate->news->image}}" alt="news"
+                                        <img src="{{url('/')}}{{$cate->news->image}}" alt="news"
                                             class="img-fluid width-100">
                                     </a>
 
@@ -259,7 +259,8 @@
                                             <ul>
                                                 <li>
                                                     <span>Bởi</span>
-                                                    <a href="{{url('auth-posts')}}/">{{$cate->news->user->username}}</a>
+                                                    <a
+                                                        href="{{url('auth-posts')}}/{{$cate->news->user->id}}/{{$cate->news->user->username}}">{{$cate->news->user->username}}</a>
                                                 </li>
                                                 <li>
                                                     <span>
@@ -282,7 +283,7 @@
                                 <div class="media mb-30">
                                     <a class="width38-lg width40-md img-opacity-hover"
                                         href="{{url('posts')}}/{{$post->id}}/{{$post->slug}}">
-                                        <img src="{{url('clients')}}/{{$post->image}}" alt="news" class="img-fluid">
+                                        <img src="{{url('/')}}{{$post->image}}" alt="news" class="img-fluid">
                                     </a>
                                     <div class="media-body">
                                         <div class="post-date-dark">
@@ -330,8 +331,7 @@
                                     <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">{{$item->title}} </a>
                                 </h3>
                             </div>
-                            <img src="{{url('clients')}}/{{$item->image}}" alt="news"
-                                class="img-fluid-life-style width-100">
+                            <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-life-style width-100">
                         </div>
                     </div>
                     @endforeach
@@ -381,8 +381,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-6 col-6">
                             <div class="mt-25">
                                 <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}" class="img-opacity-hover">
-                                    <img src="{{url('clients')}}/{{$item->image}}" alt="ad"
-                                        class="img-fluid mb-10 width-100">
+                                    <img src="{{url('/')}}{{$item->image}}" alt="ad" class="img-fluid mb-10 width-100">
                                 </a>
                                 <h3 class="title-medium-dark size-md mb-none">
                                     <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">{{$item->title}}</a>
@@ -437,13 +436,13 @@
                             <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">{{$item->title}}</a>
                         </h3>
                     </div>
-                    <img src="{{url('clients')}}/{{$item->image}}" alt="news" class="img-fluid-three-top-1 width-100">
+                    <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-three-top-1 width-100">
                 </div>
                 @endforeach
                 @foreach ($post_1_in_three as $item)
                 <div class="media mb-30">
                     <a class="img-opacity-hover" href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">
-                        <img src="{{url('clients')}}/{{$item->image}}" alt="news" class="img-fluid-sub-three-top-1">
+                        <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-sub-three-top-1">
                     </a>
                     <div class="media-body">
                         <div class="post-date-dark">
@@ -487,13 +486,13 @@
                             <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">{{$item->title}}</a>
                         </h3>
                     </div>
-                    <img src="{{url('/clients')}}/{{$item->image}}" alt="news" class="img-fluid-three-top-1 width-100">
+                    <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-three-top-1 width-100">
                 </div>
                 @endforeach
                 @foreach ($post_2_in_three as $item)
                 <div class="media mb-30">
                     <a class="img-opacity-hover" href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">
-                        <img src="{{url('clients')}}/{{$item->image}}" alt="news" class="img-fluid-sub-three-top-1">
+                        <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-sub-three-top-1">
                     </a>
                     <div class="media-body">
                         <div class="post-date-dark">
@@ -524,7 +523,7 @@
                                 <li>
                                     <span>Bởi</span>
                                     <a
-                                        href="{{url('/auth-posts')}}/{{$item->user->username}}/{{$item->user->username}}">{{$item->user->username}}</a>
+                                        href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
                                 </li>
                                 <li>
                                     <span>
@@ -537,13 +536,13 @@
                             <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">{{$item->title}}</a>
                         </h3>
                     </div>
-                    <img src="{{url('clients')}}/{{$item->image}}" alt="news" class="img-fluid-three-top-1 width-100">
+                    <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-three-top-1 width-100">
                 </div>
                 @endforeach
                 @foreach ($post_3_in_three as $item)
                 <div class="media mb-30">
                     <a class="img-opacity-hover" href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">
-                        <img src="{{url('clients')}}/{{$item->image}}" alt="news" class="img-fluid-sub-three-top-1">
+                        <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-sub-three-top-1">
                     </a>
                     <div class="media-body">
                         <div class="post-date-dark">
@@ -605,8 +604,7 @@
                                     <div class="position-relative">
                                         <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}"
                                             class="img-opacity-hover">
-                                            <img src="{{asset('clients')}}/{{$item->image}}" alt="news"
-                                                class="img-fluid">
+                                            <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid">
                                         </a>
                                         <div class="topic-box-top-xs">
                                             <div class="topic-box-sm color-cinnabar mb-20">{{$item->category->category}}
@@ -619,7 +617,8 @@
                                             <ul>
                                                 <li>
                                                     <span>Bởi</span>
-                                                    <a href="{{url('/auth-posts')}}/">
+                                                    <a
+                                                        href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">
                                                         {{$item->user->username}}
                                                     </a>
                                                 </li>
@@ -650,8 +649,7 @@
                                     <div class="position-relative">
                                         <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}"
                                             class="img-opacity-hover">
-                                            <img src="{{asset('clients')}}/{{$item->image}}" alt="news"
-                                                class="img-fluid">
+                                            <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid">
                                         </a>
                                         <div class="topic-box-top-xs">
                                             <div class="topic-box-sm color-cinnabar mb-20">{{$item->category->category}}

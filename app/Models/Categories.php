@@ -18,7 +18,6 @@ class Categories extends Model
         return $this->hasOne(\App\Models\News::class, 'category_id', 'id');
     }
 
-
     public function newCount()
     {
         return $this->hasMany('App\Models\News', 'category_id', 'id');

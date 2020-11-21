@@ -23,7 +23,7 @@ class CreateNewsTable extends Migration
             $table->string('image');
             $table->longText('content');
             $table->bigInteger('views_count');
-            $table->string('status')->default(1)->comment('0: Ẩn bài viết, 1: Hiển thị bài viết');
+            $table->integer('status')->default(1)->comment('0: Ẩn bài viết, 1: Hiển thị bài viết');
             $table->timestamps();
         });
     }

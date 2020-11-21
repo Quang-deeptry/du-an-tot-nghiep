@@ -68,7 +68,8 @@
             <div class="col-lg-8 col-md-12">
                 <div class="news-details-layout3 mb-30">
                     <div class="position-relative mb-30">
-                        <img src="{{url('clients')}}/{{$news_post_detail->image}}" alt="news-details" class="img-fluid">
+                        <img src="{{url('/')}}{{$news_post_detail->image}}" alt="news-details"
+                            class="img-fluid-post-detail">
                         <div class="topic-box-top-sm">
                             <div class="topic-box-sm color-cinnabar mb-20">{{$news_post_detail->category->category}}
                             </div>
@@ -95,7 +96,7 @@
                         </li>
                     </ul>
                     <p>
-                        {{$news_post_detail->content}}
+                        {!! $news_post_detail->content !!}
                     </p>
                     <ul class="blog-tags item-inline">
                         <li>Thể loại</li>
@@ -106,7 +107,7 @@
                         </li>
                     </ul>
                     <div class="post-share-area mb-40 item-shadow-1">
-                        <p>You can share this post!</p>
+                        <p>Bạn có thể chia sẻ bài viết</p>
                         <ul class="social-default item-inline">
                             <li>
                                 <a href="#" class="facebook">
@@ -146,7 +147,7 @@
                                 class="img-fluid rounded-circle">
                             <div class="media-body pt-10 media-margin30">
                                 <h3 class="size-lg mb-5">Tác giả</h3>
-                                <div class="post-by mb-5">{{$user->roles->name}}</div>
+                                <div class="post-by mb-5">{{$user->username}}</div>
                                 <p class="mb-15"></p>
                                 <ul class="author-social-style1 item-inline">
                                     <li>
@@ -185,6 +186,17 @@
 
                         </ul>
                     </div>
+                    @if(Auth::guest())
+                    <form class="leave-comments">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <p id="post_id">{{$news_post_detail->id}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    @else
                     <form class="leave-comments">
                         <h2 class="title-semibold-dark size-xl mb-40">Viết bình luận</h2>
                         <div class="row">
@@ -208,6 +220,8 @@
                             </div>
                         </div>
                     </form>
+                    @endif
+
                 </div>
             </div>
             <div class="ne-sidebar sidebar-break-md col-lg-4 col-md-12">
@@ -267,7 +281,7 @@
                                 </div>
                                 <a href="{{url('posts')}}/{{$item->id}}/{{$item->slug}}"
                                     class="img-opacity-hover mb-10 display-block">
-                                    <img src="{{url('clients')}}/{{$item->image}}" alt="news"
+                                    <img src="{{url('')}}/{{$item->image}}" alt="news"
                                         class="img-fluid m-auto width-100">
                                 </a>
                                 <h3 class="title-medium-dark size-md mb-none">
@@ -288,7 +302,7 @@
                             class="img-fluid m-auto mb-15">
                         <p>Đăng ký để nhận được thông báo sớm nhất </p>
                         <div class="input-group stylish-input-group">
-                            <input type="text" placeholder="Enter your mail" class="form-control">
+                            <input type="text" placeholder="Nhập email của bạn" class="form-control">
                             <span class="input-group-addon">
                                 <button type="submit">
                                     <i class="fa fa-angle-right" aria-hidden="true"></i>

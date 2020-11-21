@@ -11,15 +11,11 @@
             <div class="col-lg-10 col-md-9 col-sm-8 col-6">
                 <div class="feeding-text-dark">
                     <ol id="sample" class="ticker">
+                        @foreach ($posts as $item)
                         <li>
-                            <a href="#">list new hot</a>
+                            <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">{{$item->title}}</a>
                         </li>
-                        <li>
-                            <a href="#"></a>
-                        </li>
-                        <li>
-                            <a href="#"></a>
-                        </li>
+                        @endforeach
                     </ol>
                 </div>
             </div>
@@ -70,21 +66,19 @@
                     <div class="row tab-space5">
                         <div class="col-lg-3 col-md-6 col-sm-6 col-6">
                             <div class="form-group">
-                                <div class="ne-custom-select">
+                                <div class="ne-custom-select" id="year">
                                     <select name="year">
-                                        <option value="0">Chọn năm</option>
-                                        <option value="1">2019</option>
-                                        <option value="2">2020</option>
-                                        <option value="3">2021</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2020">2020</option>
+                                        <option value="2021">2021</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6 col-6">
                             <div class="form-group">
-                                <div class="ne-custom-select">
+                                <div class="ne-custom-select" id="month">
                                     <select name="month">
-                                        <option value="0">Chọn tháng</option>
                                         <option value="1">Tháng 1</option>
                                         <option value="2">Tháng 2</option>
                                         <option value="3">Tháng 3</option>
@@ -103,251 +97,65 @@
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6 col-6">
                             <div class="form-group">
-                                <div class="ne-custom-select">
+                                <div class="ne-custom-select" id="category">
                                     <select name="category">
-                                        <option value="0">Chọn thể loại</option>
-                                        <option value="1">Du lịch</option>
-                                        <option value="2">Thời trang</option>
-                                        <option value="3">Sức khỏe</option>
-                                        <option value="4">Thể thao</option>
-                                        <option value="5">Âm nhạc</option>
+                                        @foreach ($categories as $item)
+                                        <option value="{{$item->id}}">{{$item->category}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6 col-6 text-right">
-                            <button type="submit" class="btn-ftg-ptp-40 disabled mb-5">Search</button>
+                            <button id="button-search" type="button"
+                                class="btn-ftg-ptp-40 disabled mb-5">Search</button>
                         </div>
                     </div>
                 </form>
                 <div class="row">
+                    @foreach ($getposts as $item)
                     <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12">
                         <div class="media media-none--lg mb-30">
                             <div class="position-relative width-40">
-                                <a href="single-news-1.html" class="img-opacity-hover img-overlay-70">
-                                    <img src="{{asset('Clients/img/news/news140.jpg')}}" alt="news" class="img-fluid">
+                                <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}"
+                                    class="img-opacity-hover img-overlay-70">
+                                    <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-news">
                                 </a>
                                 <div class="topic-box-top-xs">
-                                    <div class="topic-box-sm color-cod-gray mb-20">Football</div>
+                                    <div class="topic-box-sm color-cod-gray mb-20">{{$item->category->category}}</div>
                                 </div>
                             </div>
                             <div class="media-body p-mb-none-child media-margin30">
                                 <div class="post-date-dark">
                                     <ul>
                                         <li>
-                                            <span>by</span>
-                                            <a href="single-news-1.html">Adams</a>
+                                            <span>Bởi </span>
+                                            <a
+                                                href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
                                         </li>
                                         <li>
                                             <span>
                                                 <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>March 22, 2017
+                                            </span>{{$item->created_at}}
                                         </li>
                                     </ul>
                                 </div>
                                 <h3 class="title-semibold-dark size-lg mb-15">
-                                    <a href="single-news-1.html">Erik Jones has day he won’t soon forget as Denny backup
-                                        at Bristol</a>
+                                    <a href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">{{$item->title}}</a>
                                 </h3>
-                                <p>Separated they live in the coast of the Semantics, a large language ocean. A
-                                    river named Duden flows by their place and ...
-                                </p>
+                                <p>{{$item->description}}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12">
-                        <div class="media media-none--lg mb-30">
-                            <div class="position-relative width-40">
-                                <a href="single-news-1.html" class="img-opacity-hover img-overlay-70">
-                                    <img src="{{asset('Clients/img/news/news141.jpg')}}" alt="news" class="img-fluid">
-                                </a>
-                                <div class="topic-box-top-xs">
-                                    <div class="topic-box-sm color-cod-gray mb-20">Adventure</div>
-                                </div>
-                            </div>
-                            <div class="media-body p-mb-none-child media-margin30">
-                                <div class="post-date-dark">
-                                    <ul>
-                                        <li>
-                                            <span>by</span>
-                                            <a href="single-news-1.html">Adams</a>
-                                        </li>
-                                        <li>
-                                            <span>
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>March 22, 2017
-                                        </li>
-                                    </ul>
-                                </div>
-                                <h3 class="title-semibold-dark size-lg mb-15">
-                                    <a href="single-news-1.html">Erik Jones has day he won’t soon forget as Denny backup
-                                        at Bristol</a>
-                                </h3>
-                                <p>Separated they live in the coast of the Semantics, a large language ocean. A
-                                    river named Duden flows by their place and ...
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12">
-                        <div class="media media-none--lg mb-30">
-                            <div class="position-relative width-40">
-                                <a href="single-news-1.html" class="img-opacity-hover img-overlay-70">
-                                    <img src="{{asset('Clients/img/news/news142.jpg')}}" alt="news" class="img-fluid">
-                                </a>
-                                <div class="topic-box-top-xs">
-                                    <div class="topic-box-sm color-cod-gray mb-20">Food</div>
-                                </div>
-                            </div>
-                            <div class="media-body p-mb-none-child media-margin30">
-                                <div class="post-date-dark">
-                                    <ul>
-                                        <li>
-                                            <span>by</span>
-                                            <a href="single-news-1.html">Adams</a>
-                                        </li>
-                                        <li>
-                                            <span>
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>March 22, 2017
-                                        </li>
-                                    </ul>
-                                </div>
-                                <h3 class="title-semibold-dark size-lg mb-15">
-                                    <a href="single-news-1.html">Erik Jones has day he won’t soon forget as Denny backup
-                                        at Bristol</a>
-                                </h3>
-                                <p>Separated they live in the coast of the Semantics, a large language ocean. A
-                                    river named Duden flows by their place and ...
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12">
-                        <div class="media media-none--lg mb-30">
-                            <div class="position-relative width-40">
-                                <a href="single-news-1.html" class="img-opacity-hover img-overlay-70">
-                                    <img src="{{asset('Clients/img/news/news143.jpg')}}" alt="news" class="img-fluid">
-                                </a>
-                                <div class="topic-box-top-xs">
-                                    <div class="topic-box-sm color-cod-gray mb-20">Race</div>
-                                </div>
-                            </div>
-                            <div class="media-body p-mb-none-child media-margin30">
-                                <div class="post-date-dark">
-                                    <ul>
-                                        <li>
-                                            <span>by</span>
-                                            <a href="single-news-1.html">Adams</a>
-                                        </li>
-                                        <li>
-                                            <span>
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>March 22, 2017
-                                        </li>
-                                    </ul>
-                                </div>
-                                <h3 class="title-semibold-dark size-lg mb-15">
-                                    <a href="single-news-1.html">Erik Jones has day he won’t soon forget as Denny backup
-                                        at Bristol</a>
-                                </h3>
-                                <p>Separated they live in the coast of the Semantics, a large language ocean. A
-                                    river named Duden flows by their place and ...
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12">
-                        <div class="media media-none--lg mb-30">
-                            <div class="position-relative width-40">
-                                <a href="single-news-1.html" class="img-opacity-hover img-overlay-70">
-                                    <img src="{{asset('Clients/img/news/news144.jpg')}}" alt="news" class="img-fluid">
-                                </a>
-                                <div class="topic-box-top-xs">
-                                    <div class="topic-box-sm color-cod-gray mb-20">Corporate</div>
-                                </div>
-                            </div>
-                            <div class="media-body p-mb-none-child media-margin30">
-                                <div class="post-date-dark">
-                                    <ul>
-                                        <li>
-                                            <span>by</span>
-                                            <a href="single-news-1.html">Adams</a>
-                                        </li>
-                                        <li>
-                                            <span>
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>March 22, 2017
-                                        </li>
-                                    </ul>
-                                </div>
-                                <h3 class="title-semibold-dark size-lg mb-15">
-                                    <a href="single-news-1.html">Erik Jones has day he won’t soon forget as Denny backup
-                                        at Bristol</a>
-                                </h3>
-                                <p>Separated they live in the coast of the Semantics, a large language ocean. A
-                                    river named Duden flows by their place and ...
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12">
-                        <div class="media media-none--lg mb-30">
-                            <div class="position-relative width-40">
-                                <a href="single-news-1.html" class="img-opacity-hover img-overlay-70">
-                                    <img src="img/news/news145.jpg" alt="news" class="img-fluid">
-                                </a>
-                                <div class="topic-box-top-xs">
-                                    <div class="topic-box-sm color-cod-gray mb-20">People</div>
-                                </div>
-                            </div>
-                            <div class="media-body p-mb-none-child media-margin30">
-                                <div class="post-date-dark">
-                                    <ul>
-                                        <li>
-                                            <span>by</span>
-                                            <a href="single-news-1.html">Adams</a>
-                                        </li>
-                                        <li>
-                                            <span>
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>March 22, 2017
-                                        </li>
-                                    </ul>
-                                </div>
-                                <h3 class="title-semibold-dark size-lg mb-15">
-                                    <a href="single-news-1.html">Erik Jones has day he won’t soon forget as Denny backup
-                                        at Bristol</a>
-                                </h3>
-                                <p>Separated they live in the coast of the Semantics, a large language ocean. A
-                                    river named Duden flows by their place and ...
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="row mt-20-r mb-30">
                     <div class="col-sm-6 col-12">
-                        <div class="pagination-btn-wrapper text-center--xs mb15--xs">
-                            <ul>
-                                <li class="active">
-                                    <a href="#">1</a>
-                                </li>
-                                <li>
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
-                                <li>
-                                    <a href="#">4</a>
-                                </li>
-                            </ul>
-                        </div>
+                        {{$getposts->links()}}
                     </div>
                     <div class="col-sm-6 col-12">
                         <div class="pagination-result text-right pt-10 text-center--xs">
-                            <p class="mb-none">Page 1 of 4</p>
+                            <p class="mb-none">Trang {{$getposts->currentPage()}} of {{$getposts->lastPage()}}</p>
                         </div>
                     </div>
                 </div>
@@ -394,4 +202,7 @@
     </div>
 </section>
 <!-- Archive Page Area End Here -->
+@endsection
+@section('script')
+<script src="{{asset('clients/js/posts.js')}}"></script>
 @endsection
