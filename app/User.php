@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(\App\Models\Roles::class, 'id', 'role');
     }
+
+    public function news_hasmany()
+    {
+        return $this->hasMany(\App\Models\News::class);
+    }
 }

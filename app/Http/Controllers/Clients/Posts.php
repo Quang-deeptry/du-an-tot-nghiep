@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Clients;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Categories;
 use App\Models\News;
 use Carbon\Carbon;
@@ -27,8 +28,13 @@ class Posts extends Controller
         return view('client.news', compact('posts', 'getposts', 'categories'));
     }
 
-    public function getPosts($year, $month, $category)
+    public function getPosts(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'year' => 'required',
+            'month' => 'required',
+            'category' => 'required',
+        ]);
         // hot title
         $posts = News::orderBy('id', 'desc')
             ->take(8)
@@ -38,9 +44,9 @@ class Posts extends Controller
 
         $getposts = News::with('user')
             ->with('category')
-            ->where('category_id', 'like', '%' . $category . '%')
-            ->where('created_at', 'like', '%' . $month . '%')
-            ->where('created_at', 'like', '%' . $year . '%')
+            ->where('category_id', 'like', '%' . $request->category . '%')
+            ->where('created_at', 'like', '%' . $request->month . '%')
+            ->where('created_at', 'like', '%' . $request->year . '%')
             ->orderBy('id', 'desc')
             ->paginate(6);
 

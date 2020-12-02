@@ -15,7 +15,7 @@ $(function ($) {
 
         setTimeout(function () {
             $.ajax({
-                url: "/admin-newsflash/manager-accounts/update",
+                url: "/admin-newsflash/manager-accounts/editer",
                 method: "post",
                 dataType: "json",
                 data: {

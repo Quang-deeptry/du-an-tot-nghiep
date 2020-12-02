@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Du lịch')
+@section('title', $category->category)
 
 @section('content')
 <section class="bg-accent border-bottom add-top-margin">
@@ -43,10 +43,8 @@
     </div>
 </section>
 <!-- News Info List Area End Here -->
-@foreach ($categories as $category)
-@if ($category->id == $id)
 <!-- Breadcrumb Area Start Here -->
-<section class="breadcrumbs-area" style="background-image: url('img/banner/breadcrumbs-banner.jpg');">
+<section class="breadcrumbs-area">
     <div class="container">
         <div class="breadcrumbs-content">
             <h1>{{$category->category}}</h1>
@@ -81,11 +79,6 @@
                             <div class="media-body p-mb-none-child media-margin30">
                                 <div class="post-date-dark">
                                     <ul>
-                                        <li>
-                                            <span>Bởi</span>
-                                            <a
-                                                href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
-                                        </li>
                                         <li>
                                             <span>
                                                 <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -182,6 +175,4 @@
     </div>
 </section>
 <!-- Post Style 1 Page Area End Here -->
-@endif
-@endforeach
 @endsection

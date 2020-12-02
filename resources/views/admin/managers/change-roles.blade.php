@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Thay đổi quyền')
+@section('title', 'Danh sách quyền')
 @section('scriptTop')
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -13,12 +13,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Thay đổi quyền</h1>
+                    <h1>Quyền truy cập người dùng</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{url('/admin-newsflash/trang-chu')}}">Trang chủ</a></li>
-                        <li class="breadcrumb-item active">Thay đổi quyền</li>
+                        <li class="breadcrumb-item active">Quyền truy cập người dùng</li>
                     </ol>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Thông tin tài khoản & cập nhật</h3>
+                            <h3 class="card-title">Thông tin Quyền truy cập người dùng</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -48,14 +48,10 @@
                                                         ID</th>
                                                     <th class="sorting" tabindex="1" aria-controls="example1"
                                                         rowspan="1" colspan="1"
-                                                        aria-label="CSS grade: activate to sort column ascending">Chức
-                                                        năng
+                                                        aria-label="CSS grade: activate to sort column ascending">Quyền
+                                                        truy cập
                                                     </th>
-                                                    <th class="sorting" tabindex="2" aria-controls="example1"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="CSS grade: activate to sort column ascending">Chức
-                                                        năng
-                                                    </th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -64,13 +60,6 @@
                                                 <tr role="row" class="odd">
                                                     <td tabindex="0" class="sorting_1">{{$item->id}}</td>
                                                     <td>{{$item->name}} </td>
-                                                    <td><a class="btn btn-info btn-sm"
-                                                            href="{{url('/admin-newsflash/change-roles/editer')}}/{{$item->id}}/{{$item->name}}">
-                                                            <i class="fas fa-pencil-alt">
-                                                            </i>
-                                                            Chỉnh sửa
-                                                        </a>
-                                                    </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

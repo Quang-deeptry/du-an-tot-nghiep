@@ -69,7 +69,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="{{url('/admin-newsflash/trang-chu')}}" class="brand-link">
                 <img src="{{asset('admin/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3">
                 <span class="brand-text font-weight-light">NewsFlash</span>
@@ -84,7 +84,7 @@
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Admin</a>
+                        <a href="{{url('/admin-newsflash/trang-chu')}}" class="d-block">Admin</a>
                     </div>
                 </div>
 
@@ -95,6 +95,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-header">Quản lí</li>
+                        @if(Auth::user()->role == 1)
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
@@ -118,6 +119,7 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
@@ -134,6 +136,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{url('/admin-newsflash/auth-posts-unapproval')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Bài viết cá nhân chưa duyệt</p>
+                                    </a>
+                                </li>
+                                @if(Auth::user()->role== 1 || Auth::user()->role == 2)
+                                <li class="nav-item">
                                     <a href="{{url('/admin-newsflash/approval-articles')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Bài viết đã duyệt</p>
@@ -145,6 +154,7 @@
                                         <p>Bài viết đang chờ duyệt</p>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
                         </li>
@@ -157,13 +167,22 @@
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
+
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="starter.html" class="nav-link">
+                                    <a href="{{url('/admin-newsflash/auth-posts-comments')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Bình luận bài viết cá nhân</p>
+                                    </a>
+                                </li>
+                                @if(Auth::user()->role == 1 || Auth::user()->role == 2)
+                                <li class="nav-item">
+                                    <a href="{{url('/admin-newsflash/list-comments')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Danh sách bình luận</p>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
                         <li class="nav-header">Thể loại bài viết</li>
@@ -177,7 +196,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="starter.html" class="nav-link">
+                                    <a href="{{url('/admin-newsflash/list-category')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Thêm thể loại</p>
                                     </a>
@@ -204,14 +223,16 @@
                         </li>
 
                         <li class="nav-header">Thông tin quản lí</li>
+                        @if(Auth::user()->role == 1)
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-warning"></i>
-                                <p>Yêu cầu hỗ trợ </p>
+                            <a href="{{url('/admin-newsflash/subscribe')}}" class="nav-link">
+                                <i class="nav-icon far fa-circle text-success"></i>
+                                <p>Email đăng kí </p>
                             </a>
                         </li>
+                        @endif
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{url('/admin-newsflash/admin-info')}}" class="nav-link">
                                 <i class="nav-icon far fa-circle text-info"></i>
                                 <p>Thông tin quản trị viên</p>
                             </a>
@@ -241,6 +262,15 @@
     <!-- Bootstrap -->
     <script src="{{asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- overlayScrollbars -->
+    <script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+            if (!confirm('Bạn có muốn xóa ?')) e.preventDefault();
+        };
+        for (var i = 0, l = elems.length; i < l; i++) {
+            elems[i].addEventListener('click', confirmIt, false);
+        }
+    </script>
     @yield('script')
     <script src="{{asset('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
     <!-- AdminLTE App -->
@@ -249,8 +279,11 @@
     <!-- OPTIONAL SCRIPTS -->
     <script src="{{asset('admin/dist/js/demo.js')}}"></script>
 
-    <!-- PAGE PLUGINS -->
-
+    <script>
+        $("#checkAll").click(function(){
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+    </script>
 </body>
 
 </html>

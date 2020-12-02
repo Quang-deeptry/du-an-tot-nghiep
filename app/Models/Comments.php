@@ -20,6 +20,6 @@ class Comments extends Model
 
     public function news()
     {
-        return $this->belongsTo(\App\Models\News::class);
+        return $this->belongsTo(\App\Models\News::class, 'news_id', 'id');
     }
 }

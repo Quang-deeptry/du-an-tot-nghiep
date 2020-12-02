@@ -37,11 +37,25 @@
                             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
+                                        <div class="response_remove">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="responveRemove">
+                                                @if (\Session::has('remove_success'))
+                                                <div class="alert alert-success message">
+                                                    {!! \Session::get('remove_success') !!}
+                                                </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-danger mb-4" id="delete_post">Xóa bài đã
+                                            chọn</button>
                                         <table id="example1"
                                             class="table table-bordered table-striped dataTable dtr-inline" role="grid"
                                             aria-describedby="example1_info">
                                             <thead>
                                                 <tr role="row">
+                                                    <th><input type="checkbox" name="delete_all" id="checkAll"></th>
                                                     <th class="sorting_asc" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1" aria-sort="ascending"
                                                         aria-label="Rendering engine: activate to sort column descending">
@@ -90,6 +104,8 @@
                                                 @foreach ($approval_articles as $key => $item)
 
                                                 <tr role="row" class="odd">
+                                                    <td><input class="changes_checked" type="checkbox" name="checked[]"
+                                                            value="{{$item->id}}">
                                                     <td tabindex="0" class="sorting_1">{{$key + 1}}</td>
                                                     <td>{{$item->category->category}} </td>
                                                     <td>{!! Str::limit($item->title, 20, '...') !!} </td>
@@ -110,7 +126,7 @@
                                                             </i>
                                                             Chỉnh sửa
                                                         </a>
-                                                        <a class="btn btn-danger btn-sm click-remove"
+                                                        <a class="btn btn-danger btn-sm click-remove confirmation"
                                                             href="{{url('/admin-newsflash/approval-articles/delete')}}/{{$item->id}}">
                                                             <i class="fas fa-trash">
                                                             </i>
@@ -131,15 +147,7 @@
                 <!-- /.col -->
             </div>
             <!-- /.row -->
-            <div class="col-md-10">
-                <div class="responveRemove">
-                    @if (\Session::has('remove_success'))
-                    <div class="alert alert-success message">
-                        {!! \Session::get('remove_success') !!}
-                    </div>
-                    @endif
-                </div>
-            </div>
+
         </div>
         <!-- /.container-fluid -->
 
@@ -153,6 +161,8 @@
 <script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{asset('admin/main/managers/checkbox-deletes-approval.js')}}"></script>
+
 <script>
     setTimeout(function(){
         $(".message").delay(1500).fadeOut('slow');

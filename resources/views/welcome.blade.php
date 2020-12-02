@@ -58,11 +58,7 @@
                         </h1>
                         <div class="post-date-light">
                             <ul>
-                                <li>
-                                    <span>Bởi </span>
-                                    <a
-                                        href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
-                                </li>
+
                                 <li>
                                     <span>
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -87,11 +83,7 @@
                                 </h1>
                                 <div class="post-date-light">
                                     <ul>
-                                        <li>
-                                            <span>Bởi </span>
-                                            <a
-                                                href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
-                                        </li>
+
                                         <li>
                                             <span>
                                                 <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -112,11 +104,7 @@
                                 </h3>
                                 <div class="post-date-light">
                                     <ul>
-                                        <li>
-                                            <span>Bởi </span>
-                                            <a
-                                                href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
-                                        </li>
+
                                         <li>
                                             <span>
                                                 <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -139,11 +127,7 @@
                                 </h3>
                                 <div class="post-date-light">
                                     <ul>
-                                        <li>
-                                            <span>Bởi </span>
-                                            <a
-                                                href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
-                                        </li>
+
                                         <li>
                                             <span>
                                                 <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -172,11 +156,16 @@
                     <div class="topic-border color-cinnabar mb-30">
                         <div class="topic-box-lg color-cinnabar">Bài viết nổi bật</div>
                         <div class="isotope-classes-tab isotop-btn">
+                            @if($category_current != null)
                             <a href="#" data-filter=".item{{$category_current->id}}"
                                 class="current">{{$category_current->category}}</a>
+                            @endif
                             @foreach ($categories_not1 as $category)
+                            @if($category->news != null)
                             <a href="#" data-filter=".item{{$category->id}}">{{$category->category}}</a>
+                            @endif
                             @endforeach
+
                         </div>
                         <div class="more-info-link">
                             <a href="{{url('/news')}}">Thêm
@@ -184,7 +173,9 @@
                             </a>
                         </div>
                     </div>
+
                     <div class="featuredContainer">
+                        @if($category_current != null)
                         <div class="row item{{$category_current->id}}">
                             <div class="col-md-6 col-sm-12">
                                 <div class="img-overlay-70 img-scale-animate mb-30">
@@ -193,8 +184,10 @@
                                         <img src="{{url('/')}}{{$post_category_current->image}}" alt="news"
                                             class="img-fluid width-100">
                                     </a>
+
                                     <div class="mask-content-lg">
-                                        <div class="topic-box-sm color-cinnabar mb-20">{{$category_current->category}}
+                                        <div class="topic-box-sm color-cinnabar mb-20">
+                                            {{$category_current->category}}
                                         </div>
                                         <h2 class="title-medium-light size-lg">
                                             <a
@@ -202,11 +195,7 @@
                                         </h2>
                                         <div class="post-date-light">
                                             <ul>
-                                                <li>
-                                                    <span>Bởi</span>
-                                                    <a
-                                                        href="{{url('auth-posts')}}/{{$post_category_current->user->id}}/{{$post_category_current->user->username}}">{{$post_category_current->user->username}}</a>
-                                                </li>
+
                                                 <li>
                                                     <span>
                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -215,10 +204,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+
                             <div class="col-md-6 col-sm-12">
-                                @foreach ($post_four_category_current as $item)
+                                @foreach ($post_four_category_current as $key => $item)
+                                @if($key > 0)
                                 <div class="media mb-30">
                                     <a class="width38-lg width40-md img-opacity-hover"
                                         href="{{url('posts')}}/{{$item->id}}/{{$item->slug}}">
@@ -239,11 +229,19 @@
                                         </h3>
                                     </div>
                                 </div>
+                                @endif
                                 @endforeach
                             </div>
                         </div>
+                        @endif
                         {{-- end item curren  --}}
+
                         @foreach ($categories_not1 as $cate)
+                        @if($cate->news != null)
+                        @php
+                        $post_four = App\Models\News::with('category')->with('user')->where('category_id',
+                        $cate->id)->take(4)->get();
+                        @endphp
                         <div class="row item{{$cate->id }}">
                             <div class="col-md-6 col-sm-12">
                                 <div class="img-overlay-70 img-scale-animate mb-30">
@@ -257,11 +255,7 @@
                                             {{$cate->category}}</div>
                                         <div class="post-date-light">
                                             <ul>
-                                                <li>
-                                                    <span>Bởi</span>
-                                                    <a
-                                                        href="{{url('auth-posts')}}/{{$cate->news->user->id}}/{{$cate->news->user->username}}">{{$cate->news->user->username}}</a>
-                                                </li>
+
                                                 <li>
                                                     <span>
                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -276,14 +270,13 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
-                                @foreach ($posts_four_category as $item_sub)
-                                @foreach ($item_sub->newCount as $key => $post)
-                                @if ($cate->id == $item_sub->id)
+                                @foreach ($post_four as $item_sub)
+                                @if ($cate->id == $item_sub->category_id)
                                 @if ($key > 0)
                                 <div class="media mb-30">
                                     <a class="width38-lg width40-md img-opacity-hover"
-                                        href="{{url('posts')}}/{{$post->id}}/{{$post->slug}}">
-                                        <img src="{{url('/')}}{{$post->image}}" alt="news" class="img-fluid">
+                                        href="{{url('posts')}}/{{$item_sub->id}}/{{$item_sub->slug}}">
+                                        <img src="{{url('/')}}{{$item_sub->image}}" alt="news" class="img-fluid">
                                     </a>
                                     <div class="media-body">
                                         <div class="post-date-dark">
@@ -291,23 +284,25 @@
                                                 <li>
                                                     <span>
                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                    </span>{{$post->created_at}}</li>
+                                                    </span>{{$item_sub->created_at}}</li>
                                             </ul>
                                         </div>
                                         <h3 class="title-medium-dark size-md mb-none">
                                             <a
-                                                href="{{url('posts')}}/{{$post->id}}/{{$post->slug}}">{{$post->title}}</a>
+                                                href="{{url('posts')}}/{{$item_sub->id}}/{{$item_sub->slug}}">{{$item_sub->title}}</a>
                                         </h3>
                                     </div>
                                 </div>
                                 @endif
                                 @endif
                                 @endforeach
-                                @endforeach
+
                             </div>
                         </div>
+                        @endif
                         @endforeach
                     </div>
+
                 </div>
                 <div class="row tab-space1 mb-25">
                     <div class="col-12">
@@ -315,6 +310,7 @@
                             <div class="topic-box-lg color-apple">Bài viết mới</div>
                         </div>
                     </div>
+
                     @foreach ($life_style as $item)
                     <div class="col-lg-4 col-md-6 col-sm-6 col-6">
                         <div class="img-overlay-70 img-scale-animate mb-2">
@@ -365,6 +361,7 @@
                         </li>
                     </ul>
                 </div>
+
                 <div class="sidebar-box">
                     <div class="ne-banner-layout1 text-center">
                         <a href="#">
@@ -411,8 +408,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-12">
-                @foreach ($news_four_top_1 as $item)
-
+                @foreach ($news_three_top_1 as $item)
                 <div class="topic-border color-cutty-sark mb-30 width-100">
                     <div class="topic-box-lg color-cutty-sark">{{$item->category->category}}</div>
                 </div>
@@ -420,11 +416,7 @@
                     <div class="mask-content-sm">
                         <div class="post-date-light">
                             <ul>
-                                <li>
-                                    <span>Bởi</span>
-                                    <a
-                                        href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
-                                </li>
+
                                 <li>
                                     <span>
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -439,7 +431,8 @@
                     <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-three-top-1 width-100">
                 </div>
                 @endforeach
-                @foreach ($post_1_in_three as $item)
+                @foreach ($post_1_in_three as $key => $item)
+                @if($key > 0)
                 <div class="media mb-30">
                     <a class="img-opacity-hover" href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">
                         <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-sub-three-top-1">
@@ -459,10 +452,11 @@
                         </h3>
                     </div>
                 </div>
+                @endif
                 @endforeach
             </div>
             <div class="col-lg-4 col-md-12">
-                @foreach ($news_four_top_2 as $item)
+                @foreach ($news_three_top_2 as $item)
                 <div class="topic-border color-web-orange mb-30 width-100">
                     <div class="topic-box-lg color-web-orange">{{$item->category->category}}</div>
                 </div>
@@ -470,11 +464,7 @@
                     <div class="mask-content-sm">
                         <div class="post-date-light">
                             <ul>
-                                <li>
-                                    <span>Bởi</span>
-                                    <a
-                                        href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
-                                </li>
+
                                 <li>
                                     <span>
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -489,7 +479,8 @@
                     <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-three-top-1 width-100">
                 </div>
                 @endforeach
-                @foreach ($post_2_in_three as $item)
+                @foreach ($post_2_in_three as $key => $item)
+                @if($key > 0)
                 <div class="media mb-30">
                     <a class="img-opacity-hover" href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">
                         <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-sub-three-top-1">
@@ -509,10 +500,11 @@
                         </h3>
                     </div>
                 </div>
+                @endif
                 @endforeach
             </div>
             <div class="col-lg-4 col-md-12">
-                @foreach ($news_four_top_3 as $item)
+                @foreach ($news_three_top_3 as $item)
                 <div class="topic-border color-cutty-sark mb-30 width-100">
                     <div class="topic-box-lg color-cutty-sark">{{$item->category->category}}</div>
                 </div>
@@ -520,11 +512,7 @@
                     <div class="mask-content-sm">
                         <div class="post-date-light">
                             <ul>
-                                <li>
-                                    <span>Bởi</span>
-                                    <a
-                                        href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
-                                </li>
+
                                 <li>
                                     <span>
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -539,7 +527,8 @@
                     <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-three-top-1 width-100">
                 </div>
                 @endforeach
-                @foreach ($post_3_in_three as $item)
+                @foreach ($post_3_in_three as $key => $item)
+                @if($key > 0)
                 <div class="media mb-30">
                     <a class="img-opacity-hover" href="{{url('/posts')}}/{{$item->id}}/{{$item->slug}}">
                         <img src="{{url('/')}}{{$item->image}}" alt="news" class="img-fluid-sub-three-top-1">
@@ -559,6 +548,7 @@
                         </h3>
                     </div>
                 </div>
+                @endif
                 @endforeach
             </div>
         </div>
@@ -574,6 +564,7 @@
 
     </div>
 </section>
+
 <!-- Latest News Area End Here -->
 <!-- More News Area Start Here -->
 <section class="bg-accent section-space-less30">
@@ -584,10 +575,14 @@
                     <div class="topic-border color-scampi mb-30">
                         <div class="topic-box-lg color-scampi">Tin tức khác</div>
                         <div class="isotope-classes-tab isotop-btn">
+                            @if($category_current != null)
                             <a href="#" data-filter=".item{{$category_current->id}}"
                                 class="current">{{$category_current->category}}</a>
+                            @endif
                             @foreach ($categories_not1 as $category)
+                            @if($category->news != null)
                             <a href="#" data-filter=".item{{$category->id}}">{{$category->category}}</a>
+                            @endif
                             @endforeach
                         </div>
                         <div class="more-info-link">
@@ -597,6 +592,7 @@
                         </div>
                     </div>
                     <div class="featuredContainer">
+                        @if($category_current != null)
                         <div class="row item{{$category_current->id}}">
                             @foreach ($post_other_news_current as $item)
                             <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12">
@@ -615,13 +611,7 @@
                                     <div class="media-body p-mb-none-child media-margin30">
                                         <div class="post-date-dark">
                                             <ul>
-                                                <li>
-                                                    <span>Bởi</span>
-                                                    <a
-                                                        href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">
-                                                        {{$item->user->username}}
-                                                    </a>
-                                                </li>
+
                                                 <li>
                                                     <span>
                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -640,9 +630,14 @@
                             </div>
                             @endforeach
                         </div>
-                        @foreach ($categories as $item_cate)
+                        @endif
+                        @foreach ($categories_not1 as $item_cate)
+                        @if($item_cate->news != null)
+                        @php
+                        $post_other_news = App\Models\News::where('category_id',$item_cate->id)->take(5)->get();
+                        @endphp
                         @foreach ($post_other_news as $item)
-                        @if ($item->category_id === $item_cate->id)
+                        @if ($item->category_id == $item_cate->id)
                         <div class="row item{{$item_cate->id}}">
                             <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12">
                                 <div class="media media-none--lg mb-30">
@@ -660,11 +655,7 @@
                                     <div class="media-body p-mb-none-child media-margin30">
                                         <div class="post-date-dark">
                                             <ul>
-                                                <li>
-                                                    <span>Bởi</span>
-                                                    <a
-                                                        href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
-                                                </li>
+
                                                 <li>
                                                     <span>
                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -686,6 +677,7 @@
                         <p>Not data</p>
                         @endif
                         @endforeach
+                        @endif
                         @endforeach
                     </div>
 
@@ -720,7 +712,6 @@
             </div>
         </div>
     </div>
-
 </section>
 <!-- More News Area End Here -->
 

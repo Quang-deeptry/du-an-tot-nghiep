@@ -6,17 +6,38 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\News;
+use App\Models\Comments;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Response;
+
+
 
 class AuthPosts extends Controller
 {
+    protected $role;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->role = Auth::user()->role;
+            if ($this->role == 4) {
+                App::abort(404);
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         // news 
-        $news =  News::with('category')->where('user_id', Auth::user()->id)->get();
+        $news =  News::with('category')
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('id', 'desc')
+            ->get();
 
         return view('admin.manager-post.auth-posts', compact('news'));
     }
@@ -24,22 +45,32 @@ class AuthPosts extends Controller
     public function editer($id, $slug)
     {
         if (isset($id)) {
-            $categories = Categories::get();
-            $post = News::with('category')->where('id', $id)->where('user_id', Auth::user()->id)->first();
 
-            return view('admin.manager-post.auth-post-editer', compact('categories', 'post'));
+            $categories = Categories::get();
+
+            $post = News::with('category')
+                ->where('id', $id)
+                ->where('user_id', Auth::user()->id)
+                ->first();
+            if ($post != null) {
+                return view('admin.manager-post.auth-post-editer', compact('categories', 'post'));
+            }
+            App::abort(404);
         }
+
+        App::abort(404);
     }
 
     public function update(Request $request)
     {
-        $post = News::where('id', $request->id)->first();
+        if (!empty($request->id)) {
 
-        if ($post->user_id == 0 || $post->user_id == 1 || $post->user_id == 2) {
+            $post = News::where('id', $request->id)->first();
+
             $messages = [
                 'category_id.required' => 'Vui lòng chọn thể loại',
                 'title.required' => 'Vui lòng nhập thể loại',
-                'title.max' => 'Vui lòng ít hơn 80 kí tự',
+                'title.max' => 'Vui lòng ít hơn 191 kí tự',
                 'description.required' => 'Vui lòng nhập mô tả ngắn',
                 'description.max' => 'Vui lòng nhập nhỏ hơn 255 kí tự',
                 'image.required'  => 'Vui lòng chọn hình ảnh',
@@ -49,7 +80,7 @@ class AuthPosts extends Controller
 
             $validator = Validator::make($request->all(), [
                 'category_id' => 'required',
-                'title' => 'required|max:80',
+                'title' => 'required|max:191',
                 'description' => 'required|max:255',
                 'image' => 'required|mimes:jpeg,jpg,png,gif',
                 'content' => 'required',
@@ -80,5 +111,31 @@ class AuthPosts extends Controller
 
             return redirect()->back()->with('message', 'Cập nhật thành công!');
         }
+
+        return redirect()->back()->with('danger', 'Chúng tôi phát hiện bạn đang thay đổi 1 số điều không được phép !');
+    }
+
+    public function deletes_checked(Request $request)
+    {
+        if (json_decode($request->checkeds) != null) {
+            $data = json_decode($request->checkeds);
+            foreach ($data as $value) {
+                News::where('id', $value)->delete();
+                Comments::where('news_id', $value)->delete();
+            }
+            return Response::json(array('success' => 'Đã xóa bài viết được chọn!'), 200);
+        }
+
+        return Response::json(array('error' => 'Không có bài viết được xóa!'), 200);
+    }
+
+    public function delete($id)
+    {
+        if (isset($id)) {
+            News::where('id', $id)->delete();
+            Comments::where('news_id', $id)->delete();
+            return redirect()->back()->with('remove_success', 'Xóa bài viết thành công !');
+        }
+        App::abort(404);
     }
 }

@@ -62,7 +62,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-12">
-                <form id="archive-search" class="archive-search-box bg-accent item-shadow-1">
+                <form id="archive-search" action="{{url('/news/q')}}"
+                    class="archive-search-box bg-accent item-shadow-1">
                     <div class="row tab-space5">
                         <div class="col-lg-3 col-md-6 col-sm-6 col-6">
                             <div class="form-group">
@@ -107,7 +108,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6 col-6 text-right">
-                            <button id="button-search" type="button"
+                            <button id="button-search" type="submit"
                                 class="btn-ftg-ptp-40 disabled mb-5">Search</button>
                         </div>
                     </div>
@@ -128,11 +129,6 @@
                             <div class="media-body p-mb-none-child media-margin30">
                                 <div class="post-date-dark">
                                     <ul>
-                                        <li>
-                                            <span>Bởi </span>
-                                            <a
-                                                href="{{url('/auth-posts')}}/{{$item->user->id}}/{{$item->user->username}}">{{$item->user->username}}</a>
-                                        </li>
                                         <li>
                                             <span>
                                                 <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -163,32 +159,57 @@
             <div class="ne-sidebar sidebar-break-md col-lg-4 col-md-12">
                 <div class="sidebar-box">
                     <div class="topic-border color-cod-gray mb-30">
-                        <div class="topic-box-lg color-cod-gray">Archives</div>
+                        <div class="topic-box-lg color-cod-gray">Mạng xã hội</div>
                     </div>
-                    <ul class="archive-list">
-
-                        <li>
-                            <a href="#">Tháng 2 2020 (1)</a>
+                    <ul class="stay-connected overflow-hidden">
+                        <li class="facebook">
+                            <a href="#">
+                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                                <div class="connection-quantity">50.2 k</div>
+                                <p>Fans</p>
+                            </a>
+                        </li>
+                        <li class="twitter">
+                            <a href="#">
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                                <div class="connection-quantity">10.3 k</div>
+                                <p>Followers</p>
+                            </a>
+                        </li>
+                        <li class="linkedin">
+                            <a href="#">
+                                <i class="fa fa-linkedin" aria-hidden="true"></i>
+                                <div class="connection-quantity">25.4 k</div>
+                                <p>Fans</p>
+                            </a>
+                        </li>
+                        <li class="rss">
+                            <a href="#">
+                                <i class="fa fa-rss" aria-hidden="true"></i>
+                                <div class="connection-quantity">20.8 k</div>
+                                <p>Subscriber</p>
+                            </a>
                         </li>
                     </ul>
                 </div>
                 <div class="sidebar-box">
                     <div class="ne-banner-layout1 text-center">
                         <a href="#">
-                            <img src="{{asset('clients/img/banner/banner3.jpg')}}" alt="ad" class="img-fluid">
+                            <img src="{{url('clients')}}/img/banner/banner3.jpg" alt="ad" class="img-fluid">
                         </a>
                     </div>
                 </div>
                 <div class="sidebar-box">
                     <div class="topic-border color-cod-gray mb-30">
-                        <div class="topic-box-lg color-cod-gray">Newsletter</div>
+                        <div class="topic-box-lg color-cod-gray">Tin tức mới</div>
                     </div>
                     <div class="newsletter-area bg-primary">
-                        <img src="{{asset('clients/img/banner/newsletter.png')}}" alt="newsletter"
+
+                        <img src="{{url('clients')}}/img/banner/newsletter.png" alt="newsletter"
                             class="img-fluid m-auto mb-15">
-                        <p>Đăng kí để nhận được thông tin mới nhất</p>
+                        <p>Đăng ký để nhận được thông báo sớm nhất </p>
                         <div class="input-group stylish-input-group">
-                            <input type="email" placeholder="Nhập địa chỉ email" class="form-control">
+                            <input type="text" placeholder="Nhập email của bạn" class="form-control">
                             <span class="input-group-addon">
                                 <button type="submit">
                                     <i class="fa fa-angle-right" aria-hidden="true"></i>
