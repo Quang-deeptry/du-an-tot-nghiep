@@ -2,7 +2,7 @@
     use App\Models\Categories;
     use App\Models\News;
 
-    $nav = Categories::get();
+    $nav = Categories::with('news')->take(5)->get();
     $categories = Categories::with('newCount')->get();
     $top_views = News::orderBy('views_count', 'desc')->take(4)->get();
     $good_post = News::orderBy('views_count', 'desc')->limit(9)->get();
@@ -74,10 +74,12 @@
                                                 <a href="{{url('/')}}">Trang chủ</a>
                                             </li>
                                             @foreach ($nav as $item)
+                                            @if($item->news != null)
                                             <li>
                                                 <a
                                                     href="{{url('/category')}}/{{$item->id}}/{{$item->slug}}">{{$item->category}}</a>
                                             </li>
+                                            @endif
                                             @endforeach
                                         </ul>
                                     </nav>
@@ -170,11 +172,13 @@
                                 <h2 class="title-bold-light title-bar-left text-uppercase">Danh mục phổ biến</h2>
                                 <ul class="popular-categories">
                                     @foreach ($categories as $item)
+                                    @if(count($item->newCount) != 0)
                                     <li>
                                         <a href="{{url('/category')}}/{{$item->id}}/{{$item->slug}}">{{$item->category}}
                                             <span>({{count($item->newCount)}})</span>
                                         </a>
                                     </li>
+                                    @endif
                                     @endforeach
                                 </ul>
                             </div>
@@ -242,7 +246,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            <p>© Copy right by Quang</p>
+                            <p>© Website được viết bởi nhóm thực tập sinh PT14306</p>
                         </div>
                     </div>
                 </div>
@@ -289,6 +293,12 @@
                         <a href="{{url('/auth-posts')}}/{{Auth::user()->id}}/{{Auth::user()->username}}">
                             <i class="fa fa-user" aria-hidden="true"></i>Bài viết cá nhân</a>
                     </li>
+                    @if(Auth::user()->role != 4)
+                    <li>
+                        <a href="{{url('/admin-newsflash/trang-chu')}}">
+                            <i class="fa fa-tasks" aria-hidden="true"></i>Quản trị </a>
+                    </li>
+                    @endif
                     @endif
                     <li class="panel panel-default">
                         <div class="panel-heading">
@@ -307,7 +317,6 @@
     </div>
     <!-- Wrapper End -->
     <!-- jquery-->
-
     <script src="{{asset('clients/js/jquery-2.2.4.min.js')}}" type="text/javascript"></script>
     <!-- Plugins js -->
     <script src="{{asset('clients/js/plugins.js')}}" type="text/javascript"></script>
@@ -335,6 +344,7 @@
     <script src="{{asset('clients/js/ticker.js')}}" type="text/javascript"></script>
     <!-- Custom Js -->
     <script src="{{asset('clients/js/main.js')}}" type="text/javascript"></script>
+    <script src="{{asset('clients/js/subscribe.js')}}"></script>
 
     @yield('script')
 

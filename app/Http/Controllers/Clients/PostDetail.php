@@ -9,56 +9,67 @@ use App\Models\News;
 use App\Models\Roles;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 
 class PostDetail extends Controller
 {
     public function index($id, $slug)
     {
+        if (isset($id, $slug)) {
+            $posts = News::orderBy('id', 'desc')
+                ->take(8)
+                ->get();
 
-        $posts = News::orderBy('id', 'desc')
-            ->take(8)
-            ->get();
+            $news_post_detail = News::with('user')
+                ->with('category')->with('comment')
+                ->where('id', $id)
+                ->first();
 
-        $news_post_detail = News::with('user')
-            ->with('category')->with('comment')
-            ->where('id', $id)
-            ->first();
+            if ($news_post_detail == true) {
+                // show role user
+                $user = User::with('roles')
+                    ->where('id', $news_post_detail->user_id)
+                    ->first();
 
-        // show role user
-        $user = User::with('roles')
-            ->where('id', $news_post_detail->user_id)
-            ->first();
+                $related_news = News::with('category')
+                    ->where('category_id', $news_post_detail->category_id)
+                    ->where('id', '!=', $news_post_detail->id)
+                    ->take(8)
+                    ->get();
+                $title = $news_post_detail->title;
 
-        $related_news = News::with('category')
-            ->where('category_id', $news_post_detail->category_id)
-            ->where('id', '!=', $news_post_detail->id)
-            ->take(8)
-            ->get();
-        $title = $news_post_detail->title;
+                $blogId = 'blog_' . $news_post_detail->id;
 
-        News::where('id', $id)->update([
-            'views_count' =>  $news_post_detail->views_count + 1,
-            'updated_at' => Carbon::now(),
-        ]);
+                if (!Session::has($blogId)) {
+                    $news_post_detail->increment('views_count');
+                    Session::put($blogId, 1);
+                }
 
-        return view('client.post-detail', compact('title', 'posts', 'news_post_detail', 'related_news', 'user'));
+                return view('client.post-detail', compact('title', 'posts', 'news_post_detail', 'related_news', 'user'));
+            }
+            App::abort(404);
+        }
+        App::abort(404);
     }
 
     public function createComment(Request $request)
     {
-        Comments::create([
-            'user_id' => Auth::user()->id,
-            'news_id' => $request->post_id,
-            'comment' => $request->message,
-        ]);
+        if (Auth::user()) {
+            Comments::create([
+                'user_id' => Auth::user()->id,
+                'news_id' => $request->post_id,
+                'comment' => $request->message,
+            ]);
 
-        $res = Comments::with('news')
-            ->with('user')
-            ->where('news_id', $request->post_id)
-            ->orderBy('id', 'desc')
-            ->first();
-        return response()->json($res);
+            $res = Comments::with('news')
+                ->with('user')
+                ->where('news_id', $request->post_id)
+                ->orderBy('id', 'desc')
+                ->first();
+            return response()->json($res);
+        }
     }
 
     public function getComment(Request $request)

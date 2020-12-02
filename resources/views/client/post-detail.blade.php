@@ -78,7 +78,8 @@
                     <h2 class="title-semibold-dark size-c30">{{$news_post_detail->title}}</h2>
                     <ul class="post-info-dark mb-30">
                         <li>
-                            <a href="{{url('/auth-posts')}}/{{$news_post_detail->user->username}}">
+                            <a
+                                href="{{url('/auth-posts')}}/{{$news_post_detail->user->id}}/{{$news_post_detail->user->username}}">
                                 <span>Bởi </span>{{$news_post_detail->user->username}} </a>
                         </li>
                         <li>
@@ -147,7 +148,11 @@
                                 class="img-fluid rounded-circle">
                             <div class="media-body pt-10 media-margin30">
                                 <h3 class="size-lg mb-5">Tác giả</h3>
-                                <div class="post-by mb-5">{{$user->username}}</div>
+                                <div class="post-by mb-5">
+                                    Bài viết này được viết bởi {{$user->username}} mọi người có thể xem một số bài viết
+                                    của {{$user->username}} tại
+                                    <a href="{{url('auth-posts')}}/{{$user->id}}/{{$user->username}}">bấm vào đây</a>
+                                </div>
                                 <p class="mb-15"></p>
                                 <ul class="author-social-style1 item-inline">
                                     <li>
@@ -281,7 +286,7 @@
                                 </div>
                                 <a href="{{url('posts')}}/{{$item->id}}/{{$item->slug}}"
                                     class="img-opacity-hover mb-10 display-block">
-                                    <img src="{{url('')}}/{{$item->image}}" alt="news"
+                                    <img src="{{url('')}}{{$item->image}}" alt="news"
                                         class="img-fluid m-auto width-100">
                                 </a>
                                 <h3 class="title-medium-dark size-md mb-none">

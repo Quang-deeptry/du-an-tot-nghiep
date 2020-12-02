@@ -72,7 +72,7 @@
                             <a href="{{url('/user-edit')}}" class="mb-5"
                                 style="font-size: 0.75em; color: #007bff; text-decoration: none">Chỉnh sửa</a>
                             @endif
-                            <div class="post-by mb-5">By {{$user->username}}</div>
+                            <div class="post-by mb-5">Bởi {{$user->username}}</div>
                             <p class="mb-15">Email: {{$user->email}}</p>
                             <ul class="author-social-style1 item-inline">
                                 <li>

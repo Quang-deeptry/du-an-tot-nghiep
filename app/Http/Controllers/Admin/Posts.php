@@ -10,10 +10,25 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\App;
 
 
 class Posts extends Controller
 {
+    protected $role;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->role = Auth::user()->role;
+            if ($this->role == 4) {
+                App::abort(404);
+            }
+            return $next($request);
+        });
+    }
+
+
     public function index()
     {
         // categories 
@@ -23,11 +38,10 @@ class Posts extends Controller
 
     public function createPost(Request $request)
     {
-
         $messages = [
             'category_id.required' => 'Vui lòng chọn thể loại',
             'title.required' => 'Vui lòng nhập thể loại',
-            'title.max' => 'Vui lòng ít hơn 80 kí tự',
+            'title.max' => 'Vui lòng ít hơn 191 kí tự',
             'description.required' => 'Vui lòng nhập mô tả ngắn',
             'description.max' => 'Vui lòng nhập nhỏ hơn 255 kí tự',
             'image.required'  => 'Vui lòng chọn hình ảnh',
@@ -36,9 +50,9 @@ class Posts extends Controller
 
         $validator = Validator::make($request->all(), [
             'category_id' => 'required',
-            'title' => 'required|max:80',
+            'title' => 'required|max:191',
             'description' => 'required|max:255',
-            'image' => 'required',
+            'image' => 'required|mimes:jpeg,jpg,png,gif',
             'content' => 'required',
         ], $messages);
 
@@ -66,6 +80,6 @@ class Posts extends Controller
         ));
         $newapproval = $approval->replicate();
 
-        return redirect()->back()->with('message', 'Success');
+        return redirect()->back()->with('message', 'Tạo bài viết thành công!');
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Categories extends Model
 {
     protected $table = 'categories';
-    protected $fillable = ['category'];
+    protected $fillable = ['category', 'slug'];
     protected $casts = [
         'created_at' => 'datetime:d/m/Y', // Change your format
         'updated_at' => 'datetime:d/m/Y',

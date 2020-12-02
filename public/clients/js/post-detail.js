@@ -4,12 +4,8 @@ $(function ($) {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-    var count_1 = $("#count_comment-1").text();
-    var count_2 = $("#count_comment-1").text();
     $("#button-sendMess").on("click", function (e) {
         e.preventDefault();
-        count_1++;
-        count_2++;
         $("#button-sendMess").hide();
         $("#button-loading").show();
         let post_id = $("#post_id").text();

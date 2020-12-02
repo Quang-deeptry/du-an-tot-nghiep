@@ -12,11 +12,6 @@ class News extends Model
 
     protected $fillable = ['user_id', 'category_id', 'title', 'slug', 'description', 'image', 'content', 'views_count', 'status'];
 
-    // protected $casts = [
-    //     'created_at' => 'datetime:d/m/Y', // Change your format
-    //     'updated_at' => 'datetime:d/m/Y',
-    // ];
-
     public function category()
     {
         return $this->belongsTo(\App\Models\Categories::class, 'category_id', 'id');

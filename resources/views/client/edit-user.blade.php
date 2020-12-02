@@ -49,7 +49,7 @@
             <h1>Chỉnh sửa</h1>
             <ul>
                 <li>
-                    <a href="index.html">Trang chủ</a> -</li>
+                    <a href="{{url('/')}}">Trang chủ</a> -</li>
                 <li>Chỉnh sửa trang cá nhân</li>
             </ul>
         </div>

@@ -21,10 +21,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <form id="form" action="{{asset('/admin-newsflash/approval-articles/update')}}" method="post"
+                    <form id="form" action="{{asset('/admin-newsflash/unapproval-articles/update')}}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{$post->id}}">
+                        <input type="hidden" name="user_id" value="{{$post->user_id}}">
                         <div class=" card card-primary card-outline">
                             <div class="card-header">
                                 <h3 class="card-title">Chỉnh sửa và cập nhật bài viết</h3>
@@ -72,15 +73,6 @@
                                         {!! $post->content !!}
                                     </textarea>
                                     <code class="error-content">@error('content') {{ $message }}@enderror</code>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Trạng thái</label>
-                                    <select name="status" class="form-control">
-                                        @if ($post->status == 1)
-                                        <option value="1">Hiển thị bài viết</option>
-                                        @endif
-                                        <option value="0">Ẩn bài viết</option>
-                                    </select>
                                 </div>
                                 @if(session()->has('message'))
                                 <div class="alert alert-success">
