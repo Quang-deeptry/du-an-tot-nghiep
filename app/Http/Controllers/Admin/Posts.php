@@ -38,6 +38,7 @@ class Posts extends Controller
 
     public function createPost(Request $request)
     {
+
         $messages = [
             'category_id.required' => 'Vui lòng chọn thể loại',
             'title.required' => 'Vui lòng nhập thể loại',
