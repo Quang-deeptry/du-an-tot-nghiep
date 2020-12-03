@@ -22,8 +22,10 @@ class ManagerAccounts extends Controller
 
     public function __construct()
     {
+        // sử dụng middleware đặt biến $this->role = role người dùng đã login vào
         $this->middleware(function ($request, $next) {
             $this->role = Auth::user()->role;
+            // Nếu người dùng đăng nhập vào không phải admin = 1 thì sẽ trả về trang không tồn  tại abort(404)
             if ($this->role != 1) {
                 App::abort(404);
             }
@@ -33,8 +35,10 @@ class ManagerAccounts extends Controller
 
     public function index()
     {
+        // lấy toàn bộ users
         $users = User::with('roles')->get();
 
+        // lấy toàn bộ quyền
         $roles = Roles::get();
 
         return view('admin.managers.accounts', compact('users', 'roles'));
@@ -43,6 +47,7 @@ class ManagerAccounts extends Controller
     // created account
     public function createAccount(Request $request)
     {
+        // phần hiển thị thông báo lỗi được custom lại = tiếng việt
         $messages = [
             'username.required' => 'Vui lòng nhập tài khoản',
             'email.required' => 'Vui lòng nhập email ',
@@ -50,6 +55,7 @@ class ManagerAccounts extends Controller
             'role.required' => 'Phân quyền không hợp lệ'
         ];
 
+        // check validator xem kiều kiện nhập vào có đúng với định dạng hay không
         $validator = Validator::make($request->all(), [
             'username' => 'required|max:255',
             'email' => 'required|max:255|email',
@@ -57,16 +63,21 @@ class ManagerAccounts extends Controller
             'role'  => 'required'
         ], $messages);
 
+        // check email
         $user = User::where('email', $request->email)->first();
 
-        if ($user != true) {
+        // nếu = false thì tiếp tục đoạn này
+        if ($user == false) {
+            // nếu validator ko thoả mãn điều kiện nào đó thì sẽ check ở đoạn này
             if ($validator->fails()) {
+                // in lỗi ở dạng json
                 return Response::json(array(
                     'success' => false,
                     'errors' => $validator->getMessageBag()->toArray()
                 ));
             }
 
+            // thêm tài khoản vào bảng
             $created_user = User::create([
                 'username' => $request->username,
                 'email' => $request->email,
@@ -83,9 +94,11 @@ class ManagerAccounts extends Controller
     // editer account
     public function editer($id, $username)
     {
+        // check empty $id
         if ($id) {
-
+            // select user where id = $id
             $user = User::with('roles')->where('id', $id)->first();
+            // select all role
             $all_roles = Roles::orderBy('id', 'desc')->get();
             return view('admin.managers.editer', compact('user', 'all_roles'));
         }
@@ -95,6 +108,7 @@ class ManagerAccounts extends Controller
 
     public function update(Request $request)
     {
+        // check validator xem kiều kiện nhập vào có đúng với định dạng hay không
         $validator = Validator::make($request->all(), [
             'id'    => 'required',
             'username' => 'required|max:255',
@@ -103,6 +117,7 @@ class ManagerAccounts extends Controller
             'role'  => 'required'
         ]);
 
+        // nếu validator ko thoả mãn điều kiện nào đó thì sẽ check ở đoạn này
         if ($validator->fails()) {
             $message = [
                 'mess' => 'Cập nhật thất bại!',
@@ -113,7 +128,7 @@ class ManagerAccounts extends Controller
                 'mess' => 'Cập nhật thành công!',
                 'alert' => 'success'
             ];
-
+            // update dữ liệu mới vào dữ liệu cũ
             User::where('id', $request->id)->update([
                 'username' => $request->username,
                 'email' => $request->email,
@@ -127,12 +142,15 @@ class ManagerAccounts extends Controller
     // delete account
     public function delete($id)
     {
-
+        //check empty of $id
         if (!empty($id)) {
-
+            // remove user where id = $id
             User::where('id', $id)->delete();
+            // remove News where id = $id
             News::where('user_id', $id)->delete();
+            // remove Approval where id = $id
             Approval::where('user_id', $id)->delete();
+            // remove Comments where id = $id
             Comments::where('user_id', $id)->delete();
 
             return redirect()->back()->with('remove_success', 'Xóa thành công!');
@@ -143,12 +161,19 @@ class ManagerAccounts extends Controller
 
     public function deletes_checked(Request $request)
     {
+        // check json_decode($request->checkeds not null
         if (json_decode($request->checkeds) != null) {
+            // json_decode đoạn request->checkeds đó
             $data = json_decode($request->checkeds);
+            // foreach data take value 
             foreach ($data as $value) {
+                // remove user where id = $id
                 User::where('id', $value)->delete();
+                // remove News where id = $id
                 News::where('user_id', $value)->delete();
+                // remove Comments where id = $id
                 Comments::where('user_id', $value)->delete();
+                // remove Approval where id = $id
                 Approval::where('user_id', $value)->delete();
             }
             return Response::json(array('success' => 'Đã xóa tài khoản được chọn!'), 200);
