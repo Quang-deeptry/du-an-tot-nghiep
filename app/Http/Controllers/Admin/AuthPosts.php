@@ -26,11 +26,11 @@ class AuthPosts extends Controller
         $this->middleware(function ($request, $next) {
             $this->role = Auth::user()->role;
             // Nếu người dùng đăng nhập vào là người dùng có role = 4 thì sẽ trả về trang không tồn  tại abort(404)
-            if ($this->role == 4) {
-                App::abort(404);
+            if ($this->role != 4) {
+                // Hoặc sẽ đi tới trang đã chỉ định
+                return $next($request);
             }
-            // Hoặc sẽ đi tới trang đã chỉ định
-            return $next($request);
+            App::abort(404);
         });
     }
 

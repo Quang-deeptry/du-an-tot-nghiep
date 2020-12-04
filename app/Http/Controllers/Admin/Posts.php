@@ -21,10 +21,10 @@ class Posts extends Controller
     {
         $this->middleware(function ($request, $next) {
             $this->role = Auth::user()->role;
-            if ($this->role == 4) {
-                App::abort(404);
+            if ($this->role != 4) {
+                return $next($request);
             }
-            return $next($request);
+            App::abort(404);
         });
     }
 

@@ -26,10 +26,10 @@ class ListCategory extends Controller
         $this->middleware(function ($request, $next) {
             $this->role = Auth::user()->role;
             // Nếu người dùng đăng nhập vào là admin = 1 hoặc kiểm duyệt = 2 thì sẽ trả về trang không tồn  tại abort(404)
-            if ($this->role != 1 || $this->role != 2) {
-                App::abort(404);
+            if ($this->role == 1 || $this->role == 2) {
+                return $next($request);
             }
-            return $next($request);
+            App::abort(404);
         });
     }
 
