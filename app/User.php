@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class User extends Authenticatable
 {
@@ -58,5 +60,21 @@ class User extends Authenticatable
     public function news_hasmany()
     {
         return $this->hasMany(\App\Models\News::class);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new CustomPassword($token));
+    }
+}
+
+class CustomPassword extends ResetPassword
+{
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+            ->line('We are sending this email because we recieved a forgot password request.')
+            ->action('Reset Password', url(config('app.url') . route('password.reset', $this->token, false)))
+            ->line('If you did not request a password reset, no further action is required. Please contact us if you did not submit this request.');
     }
 }
