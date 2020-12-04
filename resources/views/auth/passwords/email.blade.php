@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('clients/css/ie-only.css')}}" />
     <!-- Modernizr Js -->
     <script src="{{asset('clients/js/modernizr-2.8.3.min.js')}}"></script>
-    <title>NewsFlash | Đăng nhập</title>
+    <title>NewsFlash | Reset password</title>
 </head>
 
 <body>
@@ -99,7 +99,7 @@
     <script src="{{asset('clients/js/main.js')}}" type="text/javascript"></script>
     <!-- Modal End-->
     <script>
-    $(document).ready(function() {
+        $(document).ready(function() {
         $(".form-register").click(function() {
             window.location.href = "/register";
         })
