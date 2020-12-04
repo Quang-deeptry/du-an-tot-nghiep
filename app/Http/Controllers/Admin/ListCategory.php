@@ -83,6 +83,44 @@ class ListCategory extends Controller
         return Response::json(array('error' => 'Thể loại đã tồn tại!'), 200);
     }
 
+    public function editor($id, $slug)
+    {
+        if (isset($id)) {
+            $category = Categories::find($id);
+            if ($category == true) {
+                return view('admin..categories.editor', compact('category'));
+            }
+        }
+    }
+
+    public function update(Request $request)
+    {
+        // check validator xem kiều kiện nhập vào có đúng với định dạng hay không
+        $validator = Validator::make($request->all(), [
+            'id'    => 'required',
+            'category' => 'required|max:55',
+        ]);
+
+        // nếu validator ko thoả mãn điều kiện nào đó thì sẽ check ở đoạn này
+        if ($validator->fails()) {
+            $message = [
+                'mess' => 'Cập nhật thất bại!',
+                'alert' => 'danger'
+            ];
+        } else {
+            $message = [
+                'mess' => 'Cập nhật thành công!',
+                'alert' => 'success'
+            ];
+            // update dữ liệu mới vào dữ liệu cũ
+            Categories::where('id', $request->id)->update([
+                'category' => $request->category,
+            ]);
+        }
+
+        return response()->json($message);
+    }
+
     public function delete($id)
     {
         // check tồn tại của $Id

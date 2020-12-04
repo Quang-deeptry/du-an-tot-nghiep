@@ -99,6 +99,8 @@ Route::group(['prefix' => '/admin-newsflash', 'middleware' => 'auth'], function 
     // list category
     Route::get('/list-category', 'Admin\ListCategory@index');
     Route::post('/list-category/create', 'Admin\ListCategory@create');
+    Route::get('/list-category/editer/{id}/{slug}', 'Admin\ListCategory@editor');
+    Route::post('/list-category/editer', 'Admin\ListCategory@update');
     Route::get('/list-category/delete/{id}', 'Admin\ListCategory@delete');
     Route::post('/list-category/deletes-checked', 'Admin\ListCategory@deletes_checked');
 
