@@ -20,9 +20,9 @@ class Subscribe extends Controller
         $this->middleware(function ($request, $next) {
             $this->role = Auth::user()->role;
             if ($this->role == 4 && $this->role == 3) {
-                App::abort(404);
+                return $next($request);
             }
-            return $next($request);
+            App::abort(404);
         });
     }
 

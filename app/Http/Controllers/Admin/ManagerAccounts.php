@@ -26,10 +26,10 @@ class ManagerAccounts extends Controller
         $this->middleware(function ($request, $next) {
             $this->role = Auth::user()->role;
             // Nếu người dùng đăng nhập vào không phải admin = 1 thì sẽ trả về trang không tồn  tại abort(404)
-            if ($this->role != 1) {
-                App::abort(404);
+            if ($this->role == 1) {
+                return $next($request);
             }
-            return $next($request);
+            App::abort(404);
         });
     }
 

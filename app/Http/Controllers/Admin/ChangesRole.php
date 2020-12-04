@@ -18,10 +18,10 @@ class ChangesRole extends Controller
     {
         $this->middleware(function ($request, $next) {
             $this->role = Auth::user()->role;
-            if ($this->role != 1) {
-                App::abort(404);
+            if ($this->role == 1) {
+                return $next($request);
             }
-            return $next($request);
+            App::abort(404);
         });
     }
 
